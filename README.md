@@ -1,12 +1,16 @@
 # Titanic Survival Prediction & Explainable AI (Tuned Decision Tree)
 **Project 04 | Data Science & AI**
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://titanic-survival-predictor-using-app.streamlit.app/)
+**🌐 Live Interactive Web App:** [titanic-survival-predictor-using-app.streamlit.app](https://titanic-survival-predictor-using-app.streamlit.app/)
+
 This project builds, tunes, and explains a Decision Tree Classifier using Scikit-Learn to predict passenger survival on the RMS Titanic. Hyperparameters were systematically optimized using **GridSearchCV with 5-Fold Stratified Cross-Validation**, and the model features transparent **SHAP (SHapley Additive exPlanations)** reasoning for every prediction.
 
 ---
 
 ## Project Overview
 
+- **Live Demo:** [https://titanic-survival-predictor-using-app.streamlit.app/](https://titanic-survival-predictor-using-app.streamlit.app/)
 - **Dataset:** Titanic dataset from Seaborn (891 passenger records).
 - **Target:** `survived` (0 = Did not survive, 1 = Survived).
 - **Features:** `pclass`, `sex`, `age`, `fare`.
@@ -162,9 +166,19 @@ To move beyond "black-box" predictions and understand *why* the model makes spec
 
 ---
 
-## How to Run
+## Live Demo & How to Run
 
-1. Clone or open this repository.
+### 🌐 Live Cloud App
+You can interact with the deployed application directly in your browser without installing anything:  
+👉 **[titanic-survival-predictor-using-app.streamlit.app](https://titanic-survival-predictor-using-app.streamlit.app/)**
+
+### 💻 Running Locally
+
+1. Clone or open this repository:
+   ```bash
+   git clone https://github.com/ashishbalodia1/Titanic-survival-predictor-using-Streamlit.git
+   cd Titanic-survival-predictor-using-Streamlit
+   ```
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
