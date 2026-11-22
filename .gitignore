@@ -13,6 +13,7 @@ __pycache__/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/*
+anaconda_projects/
 
 # OS generated files
 .DS_Store

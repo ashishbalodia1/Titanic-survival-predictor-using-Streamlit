@@ -1,7 +1,7 @@
-# Titanic Survival Prediction (Tuned Decision Tree Classifier)
+# Titanic Survival Prediction & Explainable AI (Tuned Decision Tree)
 **Project 04 | Data Science & AI**
 
-This project builds, tunes, and evaluates a Decision Tree Classifier using Scikit-Learn to predict passenger survival on the RMS Titanic. Hyperparameters were systematically optimized using **GridSearchCV with 5-Fold Stratified Cross-Validation**.
+This project builds, tunes, and explains a Decision Tree Classifier using Scikit-Learn to predict passenger survival on the RMS Titanic. Hyperparameters were systematically optimized using **GridSearchCV with 5-Fold Stratified Cross-Validation**, and the model features transparent **SHAP (SHapley Additive exPlanations)** reasoning for every prediction.
 
 ---
 
@@ -12,14 +12,19 @@ This project builds, tunes, and evaluates a Decision Tree Classifier using Sciki
 - **Features:** `pclass`, `sex`, `age`, `fare`.
 - **Optimization:** `GridSearchCV` over `max_depth`, `min_samples_leaf`, `min_samples_split`, and `criterion`.
 - **Best Hyperparameters:** `{'criterion': 'gini', 'max_depth': 7, 'min_samples_leaf': 2, 'min_samples_split': 2}`.
+- **Explainable AI:** SHAP `TreeExplainer` providing feature-level attribution and reasoning for every prediction.
+- **Interactive Web App:** Streamlit dashboard with real-time input sliders and visual SHAP contribution charts.
 - **Split:** 80% train (571 samples), 20% test (143 samples), stratified on survival.
 
 ---
 
 ## Files in this Repository
 
+- `app.py`: Interactive Streamlit web application.
+- `model.joblib`: Serialized trained Decision Tree classifier.
 - `titanic_classifier.ipynb`: Complete Jupyter Notebook with code, GridSearchCV tuning, evaluation outputs, and plots.
 - `titanic.csv`: Local copy of the Titanic dataset.
+- `requirements.txt`: Project dependencies for both training and the web app.
 - `project-4-guide.pdf`: Project instructions and requirements.
 - `README.md`: Project summary, hyperparameter tuning results, and baseline comparison.
 
@@ -115,6 +120,22 @@ param_grid = {
 
 ---
 
+## Explainable AI (SHAP Reasoning)
+
+To move beyond "black-box" predictions and understand *why* the model makes specific survival calls, we use **SHAP (SHapley Additive exPlanations)**.
+
+### How SHAP Works in This Project
+- **Baseline Starting Point:** The model begins with the historical cohort survival rate (**40.63%**).
+- **Additive Contributions:** For any passenger, each attribute adds positive or negative percentage points to the baseline:
+  - **`sex = female`:** Strongly pushes probability **UP (+43.1%)** reflecting the "women and children first" protocol.
+  - **`sex = male`:** Pushes probability **DOWN (-11.4%)**.
+  - **`pclass = 1`:** Pushes probability **UP (+24.5%)** due to boat deck proximity.
+  - **`pclass = 3`:** Pushes probability **DOWN (-12.4%)** due to lower deck barriers.
+  - **`age` & `fare`:** Refine the probability based on whether the passenger was a child, adult, or senior, and their ticket tier.
+- **Interactive App Explanations:** The Streamlit app renders real-time SHAP contribution charts and plain-English justification cards for every single prediction.
+
+---
+
 ## Overfitting Analysis (Depths 1 to 12)
 
 | Depth | Training Accuracy | Testing Accuracy | Gap (Train - Test) | Observation |
@@ -148,8 +169,12 @@ param_grid = {
    ```bash
    pip install -r requirements.txt
    ```
-3. Open the notebook:
+3. Run the interactive Streamlit web app:
+   ```bash
+   streamlit run app.py
+   ```
+4. Or open and explore the training notebook:
    ```bash
    jupyter notebook titanic_classifier.ipynb
    ```
-4. Run all cells. Outputs and plots are reproducible due to `random_state=42`.
+5. All cells in the notebook run sequentially with reproducible outputs (`random_state=42`).
